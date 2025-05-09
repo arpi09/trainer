@@ -5,11 +5,13 @@ import PatientDashboard from './pages/PatientDashboard';
 import TherapistDashboard from './pages/TherapistDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
+import LandingPage from './pages/LandingPage';
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/patient" element={
           <ProtectedRoute allowedRoles={["patient"]}>
