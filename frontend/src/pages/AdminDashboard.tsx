@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import DashboardLayout from "./DashboardLayout";
 import { getIdToken } from "firebase/auth";
 import { auth } from "../firebase";
 
@@ -22,11 +23,11 @@ const AdminDashboard: React.FC = () => {
   };
 
   return (
-    <div>
+    <DashboardLayout>
       <div>Welcome to the Admin Dashboard!</div>
       <button onClick={callAdminApi}>Call Admin API</button>
       {response && <pre>{response}</pre>}
-    </div>
+    </DashboardLayout>
   );
 };
 
