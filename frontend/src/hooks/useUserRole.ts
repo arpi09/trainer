@@ -9,11 +9,16 @@ export function useUserRole() {
 
   useEffect(() => {
     const fetchRole = async (user: User) => {
-      const userRef = doc(db, "users", user.uid);
-      const userSnap = await getDoc(userRef);
-      if (userSnap.exists()) {
-        setRole(userSnap.data().role);
-      } else {
+      try {
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) {
+          setRole(userSnap.data().role);
+        } else {
+          setRole(null);
+        }
+      } catch (error) {
+        // Handle permission errors gracefully
         setRole(null);
       }
       setLoading(false);
@@ -21,6 +26,10 @@ export function useUserRole() {
 
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
+        // Log custom claims for debugging
+        user.getIdTokenResult().then((tokenResult) => {
+          console.log("User claims:", tokenResult.claims);
+        });
         fetchRole(user);
       } else {
         setRole(null);
